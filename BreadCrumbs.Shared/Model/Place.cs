@@ -5,13 +5,9 @@
         public string Name { get; set; }
         public Coordinates Coordinates { get; set; }
 
-        public Place(string name, float lat, float lng)
+        public Place(string name, double lat, double lng)
         {
-            Coordinates = new Coordinates
-            {
-                Lat = lat,
-                Long = lng
-            };
+            Coordinates = new Coordinates(lat, lng);
             Name = name;
         }
     }

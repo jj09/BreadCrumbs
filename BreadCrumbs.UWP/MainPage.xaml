@@ -17,7 +17,9 @@
             Height="546" 
             Margin="10,84,0,0" 
             VerticalAlignment="Top" 
-            Width="340">
+            Width="340"
+            SelectionChanged="SavedPlacesListView_OnSelectionChanged"
+            SelectionMode="Single">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="models:Place">
                     <TextBlock Text="{x:Bind Name}"/>

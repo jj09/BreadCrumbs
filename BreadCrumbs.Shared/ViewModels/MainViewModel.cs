@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BreadCrumbs.Shared.Models;
+using Plugin.Geolocator;
 
 namespace BreadCrumbs.Shared.ViewModels
 {
@@ -17,9 +18,14 @@ namespace BreadCrumbs.Shared.ViewModels
             SavedPlaces = new ObservableCollection<Place>();
         }
 
-        public void Save(string name)
+        public void SaveAsync(string name, Coordinates coordinates)
         {
-            SavedPlaces.Add(new Place(name, 56, -43));
+            //var locator = CrossGeolocator.Current;
+            //locator.DesiredAccuracy = 50;
+            //var position = await locator.GetPositionAsync();
+            //SavedPlaces.Add(new Place(name, position.Latitude, position.Longitude));
+
+            SavedPlaces.Add(new Place(name, coordinates.Lat, coordinates.Long));
         }
     }
 }
