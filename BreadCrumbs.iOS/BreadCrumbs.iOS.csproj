@@ -100,4 +100,10 @@
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\BreadCrumbs.Shared\BreadCrumbs.Shared.csproj">
+      <Project>{1F2AAE2D-B47A-4B36-9F08-9FDC072A9753}</Project>
+      <Name>BreadCrumbs.Shared</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>
