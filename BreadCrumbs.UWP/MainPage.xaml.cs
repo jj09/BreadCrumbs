@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using BreadCrumbs.Shared.Helpers;
 using BreadCrumbs.Shared.Models;
 using BreadCrumbs.Shared.ViewModels;
 
@@ -37,40 +38,15 @@ namespace BreadCrumbs.UWP
 
         private void saveButton_Click(object sender, RoutedEventArgs e)
         {
-            var currentLocationCoordinates = getCoordinates().Result;
-
-            ViewModel.SaveAsync(this.nameTextBox.Text, currentLocationCoordinates);
+            ViewModel.SaveAsync(this.nameTextBox.Text);
         }
         
         private async void SavedPlacesListView_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var currentLocationCoordinates = getCoordinates().Result;
+            var currentLocationCoordinates = await LocationHelper.GetCurrentLocation();
 
             var selectedPlace = ((ListView)sender).SelectedItem as Place;
             await Windows.System.Launcher.LaunchUriAsync(new Uri($"bingmaps:?rtp=pos.{currentLocationCoordinates.Lat}_{currentLocationCoordinates.Long}~pos.{selectedPlace.Coordinates.Lat}_{selectedPlace.Coordinates.Long}"));
-        }
-
-        private async Task<Coordinates> getCoordinates()
-        {
-            try
-            {
-                Geolocator geolocator = new Geolocator { DesiredAccuracyInMeters = 10, MovementThreshold = 5, ReportInterval = 5};
-
-                Geoposition geoposition = await geolocator.GetGeopositionAsync(
-                         maximumAge: TimeSpan.FromMinutes(5),
-                         timeout: TimeSpan.FromSeconds(10)
-                        );
-
-                var currentLat = geoposition.Coordinate.Latitude;
-                var currentLong = geoposition.Coordinate.Longitude;
-
-                return new Coordinates(currentLat, currentLong);
-            }
-            catch (Exception e)
-            {
-                return new Coordinates(0, 0);
-            }
-            
         }
     }
 }

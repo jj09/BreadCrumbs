@@ -43,9 +43,7 @@ namespace BreadCrumbs.Droid
 			_placesListView.Adapter = ViewModel.SavedPlaces.GetAdapter(GetItemView);
 
 			savePlaceButton.Click += delegate {
-				var position = this.GetLocation();
-
-				ViewModel.SaveAsync(placeNameEditText.Text, new Coordinates(position.Latitude, position.Longitude));
+				ViewModel.SaveAsync(placeNameEditText.Text);
 
                 placeNameEditText.Text = "";
             };
@@ -64,34 +62,9 @@ namespace BreadCrumbs.Droid
 			var view = convertView ?? this._inflater.Inflate(Resource.Layout.RowItem, null);
 
 			var title = view.FindViewById<TextView>(Resource.Id.Title);
-			title.Text = item.Name;
+			title.Text = item.Name + $"({item.Coordinates.Lat.ToString("#.##")}, {item.Coordinates.Long.ToString("#.##")})";
 
-			return view;
-		}
-
-		private Location GetLocation()
-		{
-			// DOESN'T WORK
-			//				var locator = CrossGeolocator.Current;
-			//				locator.DesiredAccuracy = 50;
-			//				var position = locator.GetPositionAsync(5000).Result;
-
-			// this can be done once app start, but...as location is not needed constantly
-			// can be done on demand only too
-			// https://developer.xamarin.com/guides/android/platform_features/maps_and_location/location/
-			// https://developer.xamarin.com/recipes/android/os_device_resources/gps/get_current_device_location/
-			var locationManager = (LocationManager)GetSystemService(LocationService);
-
-			Criteria criteriaForLocationService = new Criteria
-			{
-				Accuracy = Accuracy.Fine
-			};
-
-			IList<string> acceptableLocationProviders = locationManager.GetProviders(criteriaForLocationService, true);
-
-			var locationProvider = acceptableLocationProviders.Any() ? acceptableLocationProviders.First() : String.Empty;
-
-			return locationManager.GetLastKnownLocation(locationProvider);
+            return view;
 		}
     }
 }
