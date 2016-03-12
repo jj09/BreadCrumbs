@@ -19,8 +19,9 @@ namespace BreadCrumbs.iOS
 			this.saveButton.TouchUpInside += (object sender, EventArgs e) => 
 			{
 				var name = this.placeNameTextField.Text;
-				ViewModel.SaveAsync(name, new Coordinates(1,2));
-			};
+				ViewModel.SaveAsync(name);
+                this.placeNameTextField.Text = "";
+            };
 		}
 
 		public override void ViewDidLoad ()
@@ -77,7 +78,10 @@ namespace BreadCrumbs.iOS
 
 		public override void RowSelected (UITableView tableView, NSIndexPath indexPath)
 		{
-			// TODO: navigate to place
+            // navigate to place
+            var place = ViewModel.SavedPlaces.ElementAt(indexPath.Row);
+            var placeCoordinates = place.Coordinates;
+            UIApplication.SharedApplication.OpenUrl(new NSUrl($"http://maps.apple.com/?q={placeCoordinates.Lat},{placeCoordinates.Long}"));
 		}
 	}
 }

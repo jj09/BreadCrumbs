@@ -74,6 +74,9 @@
     <MtouchUseRefCounting>true</MtouchUseRefCounting>
     <MtouchProfiling>true</MtouchProfiling>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>BreadCrumbs.iOS.Application</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
