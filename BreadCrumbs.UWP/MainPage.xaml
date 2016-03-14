@@ -22,7 +22,7 @@
             SelectionMode="Single">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="models:Place">
-                    <TextBlock Text="{x:Bind Name}"/>
+                    <TextBlock Text="{x:Bind DisplayName}"/>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

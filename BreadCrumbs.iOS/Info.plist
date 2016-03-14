@@ -66,5 +66,9 @@
 	</array>
 	<key>UIPrerenderedIcon</key>
 	<false/>
+  <key>NSLocationAlwaysUsageDescription</key>
+  <string>Location - always</string>
+  <key>NSLocationWhenInUseUsageDescription</key>
+  <string>Location - when in use</string>
 </dict>
 </plist>

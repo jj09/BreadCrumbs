@@ -26,6 +26,10 @@ namespace BreadCrumbs.iOS
 		[GeneratedCode ("iOS Designer", "1.0")]
 		UIButton saveButton { get; set; }
 
+		[Action ("SaveClick:")]
+		[GeneratedCode ("iOS Designer", "1.0")]
+		partial void SaveClick (UIButton sender);
+
 		void ReleaseDesignerOutlets ()
 		{
 			if (placeNameTextField != null) {

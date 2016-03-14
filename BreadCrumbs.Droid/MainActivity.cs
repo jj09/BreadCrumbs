@@ -62,7 +62,7 @@ namespace BreadCrumbs.Droid
 			var view = convertView ?? this._inflater.Inflate(Resource.Layout.RowItem, null);
 
 			var title = view.FindViewById<TextView>(Resource.Id.Title);
-			title.Text = item.Name + $"({item.Coordinates.Lat.ToString("#.##")}, {item.Coordinates.Long.ToString("#.##")})";
+			title.Text = item.DisplayName;
 
             return view;
 		}

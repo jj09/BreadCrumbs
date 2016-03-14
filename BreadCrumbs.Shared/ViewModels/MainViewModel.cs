@@ -19,11 +19,13 @@ namespace BreadCrumbs.Shared.ViewModels
             SavedPlaces = new ObservableCollection<Place>();
         }
 
-        async public void SaveAsync(string name)
+        async public Task<bool> SaveAsync(string name)
         {
             var coordinates = await LocationHelper.GetCurrentLocation();
 
             SavedPlaces.Add(new Place(name, coordinates.Lat, coordinates.Long));
+
+            return true;
         }
     }
 }

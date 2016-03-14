@@ -5,6 +5,7 @@ using BreadCrumbs.Shared.ViewModels;
 using System.Linq;
 using Foundation;
 using BreadCrumbs.Shared.Models;
+using BreadCrumbs.Shared.Helpers;
 
 namespace BreadCrumbs.iOS
 {
@@ -16,12 +17,12 @@ namespace BreadCrumbs.iOS
 		{
 			ViewModel = new MainViewModel();
 
-			this.saveButton.TouchUpInside += (object sender, EventArgs e) => 
-			{
-				var name = this.placeNameTextField.Text;
-				ViewModel.SaveAsync(name);
-                this.placeNameTextField.Text = "";
-            };
+			//this.saveButton.TouchUpInside += (object sender, EventArgs e) => 
+			//{
+			//	var name = this.placeNameTextField.Text;
+			//	ViewModel.SaveAsync(name);
+   //             this.placeNameTextField.Text = "";
+   //         };
 		}
 
 		public override void ViewDidLoad ()
@@ -40,9 +41,18 @@ namespace BreadCrumbs.iOS
 		public override void ViewWillAppear(bool animated)
 		{
 			base.ViewWillAppear(animated);
-//			TableView.ReloadData();
-		}
-	}
+            PlacesTableView.ReloadData();
+        }
+
+        async partial void SaveClick(UIButton sender)
+        {
+            var name = this.placeNameTextField.Text;
+            await ViewModel.SaveAsync(name);
+            PlacesTableView.ReloadData();
+            this.placeNameTextField.Text = "";
+        }
+
+    }
 
 	public class PlacesTableSource : UITableViewSource
 	{
@@ -71,17 +81,30 @@ namespace BreadCrumbs.iOS
 				cell = new UITableViewCell (UITableViewCellStyle.Default, CellIdentifier);
 			}
 
-			cell.TextLabel.Text = item.Name;
+			cell.TextLabel.Text = item.DisplayName;
 
 			return cell;
 		}
 
-		public override void RowSelected (UITableView tableView, NSIndexPath indexPath)
+		async public override void RowSelected (UITableView tableView, NSIndexPath indexPath)
 		{
             // navigate to place
             var place = ViewModel.SavedPlaces.ElementAt(indexPath.Row);
             var placeCoordinates = place.Coordinates;
-            UIApplication.SharedApplication.OpenUrl(new NSUrl($"http://maps.apple.com/?q={placeCoordinates.Lat},{placeCoordinates.Long}"));
+
+            string mapsUrl = "";
+            if (UIApplication.SharedApplication.CanOpenUrl(new NSUrl("comgooglemaps://")))
+            {
+                var currentLocationCoordinates = await LocationHelper.GetCurrentLocation();
+                mapsUrl = $"comgooglemaps://?sq={currentLocationCoordinates.Lat},{currentLocationCoordinates.Long}&dq={placeCoordinates.Lat},{placeCoordinates.Long}&directionsmode=walking";
+            }
+            else
+            {
+                mapsUrl = $"http://maps.apple.com/?q={placeCoordinates.Lat},{placeCoordinates.Long}";
+            }
+            
+
+            UIApplication.SharedApplication.OpenUrl(new NSUrl(mapsUrl));
 		}
 	}
 }
