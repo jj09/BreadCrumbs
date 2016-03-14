@@ -33,9 +33,7 @@
                                 <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
                                     <rect key="frame" x="254" y="32" width="46" height="30"/>
                                 </variation>
-                                <connections>
-                                    <action selector="SaveClick:" destination="BYZ-38-t0r" id="27" eventType="touchUpInside"/>
-                                </connections>
+                                <connections/>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="21" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES">
                                 <rect key="frame" x="0.0" y="86" width="320" height="482"/>

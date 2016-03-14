@@ -16,13 +16,6 @@ namespace BreadCrumbs.iOS
 		public ViewController (IntPtr handle) : base (handle)
 		{
 			ViewModel = new MainViewModel();
-
-			//this.saveButton.TouchUpInside += (object sender, EventArgs e) => 
-			//{
-			//	var name = this.placeNameTextField.Text;
-			//	ViewModel.SaveAsync(name);
-   //             this.placeNameTextField.Text = "";
-   //         };
 		}
 
 		public override void ViewDidLoad ()
@@ -30,9 +23,17 @@ namespace BreadCrumbs.iOS
 			base.ViewDidLoad ();
 			// Perform any additional setup after loading the view, typically from a nib.
 			PlacesTableView.Source = new PlacesTableSource(ViewModel);
+            placeNameTextField.Placeholder = "Name of the place";
+            saveButton.TouchUpInside += async (object sender, EventArgs e) =>
+            {
+                var name = this.placeNameTextField.Text;
+                await ViewModel.SaveAsync(name);
+                PlacesTableView.ReloadData();
+                this.placeNameTextField.Text = "";
+            };
 		}
 
-		public override void DidReceiveMemoryWarning ()
+        public override void DidReceiveMemoryWarning ()
 		{
 			base.DidReceiveMemoryWarning ();
 			// Release any cached data, images, etc that aren't in use.
@@ -42,14 +43,6 @@ namespace BreadCrumbs.iOS
 		{
 			base.ViewWillAppear(animated);
             PlacesTableView.ReloadData();
-        }
-
-        async partial void SaveClick(UIButton sender)
-        {
-            var name = this.placeNameTextField.Text;
-            await ViewModel.SaveAsync(name);
-            PlacesTableView.ReloadData();
-            this.placeNameTextField.Text = "";
         }
 
     }
