@@ -6,6 +6,7 @@
     <EditText
         android:id="@+id/PlaceNameEditText"
         android:layout_width="fill_parent"
+        android:hint="Name of the place"
         android:layout_height="wrap_content" />
     <Button
         android:id="@+id/SavePlaceButton"

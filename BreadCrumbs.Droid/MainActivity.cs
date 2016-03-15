@@ -15,7 +15,7 @@ using System.Collections.Generic;
 
 namespace BreadCrumbs.Droid
 {
-    [Activity(Label = "BreadCrumbs.Droid", MainLauncher = true, Icon = "@drawable/icon")]
+    [Activity(Label = "Bread Crumbs", MainLauncher = true, Icon = "@drawable/icon")]
     public class MainActivity : Activity
     {
 		public MainViewModel ViewModel { get; set; }
@@ -38,7 +38,7 @@ namespace BreadCrumbs.Droid
             // Get our button from the layout resource,
             // and attach an event to it
             EditText placeNameEditText = FindViewById<EditText>(Resource.Id.PlaceNameEditText);
-			Button savePlaceButton = FindViewById<Button>(Resource.Id.SavePlaceButton);
+            Button savePlaceButton = FindViewById<Button>(Resource.Id.SavePlaceButton);
 			_placesListView = FindViewById<ListView>(Resource.Id.PlacesListView);
 			_placesListView.Adapter = ViewModel.SavedPlaces.GetAdapter(GetItemView);
 
