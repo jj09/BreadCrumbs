@@ -9,7 +9,7 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <TextBox x:Name="nameTextBox" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="340" />
+        <TextBox x:Name="nameTextBox" PlaceholderText="Name of the place" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="340" />
         <Button x:Name="saveButton" Content="Save" HorizontalAlignment="Left" Margin="10,47,0,0" VerticalAlignment="Top" Width="340" Click="saveButton_Click"/>
         <ListView 
             x:Name="savedPlacesListView" 

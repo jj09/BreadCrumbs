@@ -39,14 +39,23 @@ namespace BreadCrumbs.UWP
         private void saveButton_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.SaveAsync(this.nameTextBox.Text);
+
+            this.nameTextBox.Text = "";
         }
         
         private async void SavedPlacesListView_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var currentLocationCoordinates = await LocationHelper.GetCurrentLocation();
+            // API: https://msdn.microsoft.com/en-us/windows/uwp/launch-resume/launch-maps-app?f=255&MSPPError=-2147217396
 
             var selectedPlace = ((ListView)sender).SelectedItem as Place;
-            await Windows.System.Launcher.LaunchUriAsync(new Uri($"bingmaps:?rtp=pos.{currentLocationCoordinates.Lat}_{currentLocationCoordinates.Long}~pos.{selectedPlace.Coordinates.Lat}_{selectedPlace.Coordinates.Long}"));
+            var selectedPlaceCoordinates = selectedPlace.Coordinates;
+
+            // ms-walk-to api (doesn't need current location as param)
+            await Windows.System.Launcher.LaunchUriAsync(new Uri($"ms-walk-to:?destination.latitude={selectedPlaceCoordinates.Lat - 1}&destination.longitude={selectedPlaceCoordinates.Long}"));
+            
+            //// bingmaps api
+            //var currentLocationCoordinates = await LocationHelper.GetCurrentLocation();
+            //await Windows.System.Launcher.LaunchUriAsync(new Uri($"bingmaps:?rtp=pos.{currentLocationCoordinates.Lat}_{currentLocationCoordinates.Long}~pos.{selectedPlace.Coordinates.Lat}_{selectedPlace.Coordinates.Long}&mode=w"));
         }
     }
 }

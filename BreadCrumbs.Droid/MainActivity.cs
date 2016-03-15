@@ -50,7 +50,7 @@ namespace BreadCrumbs.Droid
 
 			_placesListView.ItemClick += delegate (object sender, AdapterView.ItemClickEventArgs e) {
 				var coordinates = this.ViewModel.SavedPlaces.ElementAt(e.Position).Coordinates;
-				var gmmIntentUri = Android.Net.Uri.Parse($"google.navigation:q={coordinates.Lat},{coordinates.Long}");
+				var gmmIntentUri = Android.Net.Uri.Parse($"google.navigation:q={coordinates.Lat},{coordinates.Long}&directionsmode=walking");
 				Intent mapIntent = new Intent(Intent.ActionView, gmmIntentUri);
 				mapIntent.SetPackage("com.google.android.apps.maps");
 				StartActivity(mapIntent);
