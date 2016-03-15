@@ -36,23 +36,45 @@ namespace BreadCrumbs.UWP
             savedPlacesListView.ItemsSource = ViewModel.SavedPlaces;
         }
 
+        // saveButton_Click and nameTextBox_KeyUp can be combined into 1 method 
+        // (as KeyRoutedEventArgs inherit from RoutedEventArgs) - NOT EFFICIENT THOUGH
+        //var keyREA = e as KeyRoutedEventArgs;
+        //if ( (keyREA != null && keyREA.Key == Windows.System.VirtualKey.Enter)
+        //    || keyREA == null)
+        //{
+        //    SavePlaceAndClearTextBox();
+        //}
+
         private void saveButton_Click(object sender, RoutedEventArgs e)
+        {
+            SavePlaceAndClearTextBox();
+        }
+
+        private void nameTextBox_KeyUp(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == Windows.System.VirtualKey.Enter)
+            {
+                SavePlaceAndClearTextBox();
+            }
+        }
+
+        private void SavePlaceAndClearTextBox()
         {
             ViewModel.SaveAsync(this.nameTextBox.Text);
 
             this.nameTextBox.Text = "";
         }
-        
-        private async void SavedPlacesListView_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+
+        private void savedPlacesListView_ItemClick(object sender, ItemClickEventArgs e)
         {
             // API: https://msdn.microsoft.com/en-us/windows/uwp/launch-resume/launch-maps-app?f=255&MSPPError=-2147217396
 
-            var selectedPlace = ((ListView)sender).SelectedItem as Place;
+            var selectedPlace = e.ClickedItem as Place;
             var selectedPlaceCoordinates = selectedPlace.Coordinates;
 
             // ms-walk-to api (doesn't need current location as param)
-            await Windows.System.Launcher.LaunchUriAsync(new Uri($"ms-walk-to:?destination.latitude={selectedPlaceCoordinates.Lat - 1}&destination.longitude={selectedPlaceCoordinates.Long}"));
-            
+            Windows.System.Launcher.LaunchUriAsync(new Uri($"ms-walk-to:?destination.latitude={selectedPlaceCoordinates.Lat}&destination.longitude={selectedPlaceCoordinates.Long}"));
+
             //// bingmaps api
             //var currentLocationCoordinates = await LocationHelper.GetCurrentLocation();
             //await Windows.System.Launcher.LaunchUriAsync(new Uri($"bingmaps:?rtp=pos.{currentLocationCoordinates.Lat}_{currentLocationCoordinates.Long}~pos.{selectedPlace.Coordinates.Lat}_{selectedPlace.Coordinates.Long}&mode=w"));
