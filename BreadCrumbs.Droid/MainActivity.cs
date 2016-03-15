@@ -12,6 +12,7 @@ using Plugin.Geolocator;
 using System.Linq;
 using Android.Locations;
 using System.Collections.Generic;
+using Android.Views.InputMethods;
 
 namespace BreadCrumbs.Droid
 {
@@ -21,8 +22,9 @@ namespace BreadCrumbs.Droid
 		public MainViewModel ViewModel { get; set; }
 
 		private ListView _placesListView;
+        private EditText _placeNameEditText;
 
-		private LayoutInflater _inflater;
+        private LayoutInflater _inflater;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -34,20 +36,25 @@ namespace BreadCrumbs.Droid
 
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.Main);
-
-            // Get our button from the layout resource,
-            // and attach an event to it
-            EditText placeNameEditText = FindViewById<EditText>(Resource.Id.PlaceNameEditText);
-            Button savePlaceButton = FindViewById<Button>(Resource.Id.SavePlaceButton);
-			_placesListView = FindViewById<ListView>(Resource.Id.PlacesListView);
-			_placesListView.Adapter = ViewModel.SavedPlaces.GetAdapter(GetItemView);
-
-			savePlaceButton.Click += delegate {
-				ViewModel.SaveAsync(placeNameEditText.Text);
-
-                placeNameEditText.Text = "";
+            
+            _placeNameEditText = FindViewById<EditText>(Resource.Id.PlaceNameEditText);
+            _placeNameEditText.KeyPress += (sender, e) =>
+            {
+                e.Handled = false;
+                if (e.Event.Action == KeyEventActions.Down && e.KeyCode == Keycode.Enter)
+                {
+                    SavePlaceAndClearTextBox();
+                    e.Handled = true;
+                }
             };
 
+            Button savePlaceButton = FindViewById<Button>(Resource.Id.SavePlaceButton);
+            savePlaceButton.Click += (sender, e) => {
+                SavePlaceAndClearTextBox();
+            };
+
+            _placesListView = FindViewById<ListView>(Resource.Id.PlacesListView);
+			_placesListView.Adapter = ViewModel.SavedPlaces.GetAdapter(GetItemView);
 			_placesListView.ItemClick += delegate (object sender, AdapterView.ItemClickEventArgs e) {
 				var coordinates = this.ViewModel.SavedPlaces.ElementAt(e.Position).Coordinates;
 				var gmmIntentUri = Android.Net.Uri.Parse($"google.navigation:q={coordinates.Lat},{coordinates.Long}&directionsmode=walking");
@@ -57,7 +64,14 @@ namespace BreadCrumbs.Droid
 			};
         }
 
-		private View GetItemView(int position, Place item, View convertView)
+        private void SavePlaceAndClearTextBox()
+        {
+            ViewModel.SaveAsync(_placeNameEditText.Text);
+
+            _placeNameEditText.Text = "";
+        }
+
+        private View GetItemView(int position, Place item, View convertView)
 		{
 			var view = convertView ?? this._inflater.Inflate(Resource.Layout.RowItem, null);
 
