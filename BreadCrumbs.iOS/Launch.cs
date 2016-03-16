@@ -7,6 +7,7 @@ using UIKit;
 
 namespace BreadCrumbs.iOS
 {
+    // https://developer.xamarin.com/guides/ios/application_fundamentals/working_with_images/launch-screens/
     public partial class Launch : UIViewController
     {
         public Launch(IntPtr handle) : base(handle)
