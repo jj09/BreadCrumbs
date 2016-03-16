@@ -69,8 +69,7 @@ namespace BreadCrumbs.iOS
 		string CellIdentifier = "TableCell";
 
 		MainViewModel ViewModel;
-
-
+        
 		public PlacesTableSource (MainViewModel vm)
 		{
 			ViewModel = vm;
@@ -116,6 +115,27 @@ namespace BreadCrumbs.iOS
 
             UIApplication.SharedApplication.OpenUrl(new NSUrl(mapsUrl));
 		}
-	}
+
+        // deleting from the list
+        // https://developer.xamarin.com/guides/ios/user_interface/tables/part_4_-_editing/#Swipe_to_Delete
+        public override void CommitEditingStyle(UITableView tableView, UITableViewCellEditingStyle editingStyle, Foundation.NSIndexPath indexPath)
+        {
+            switch (editingStyle)
+            {
+                case UITableViewCellEditingStyle.Delete:
+                    // remove the item from the underlying data source
+                    ViewModel.SavedPlaces.RemoveAt(indexPath.Row);
+                    // delete the row from the table
+                    tableView.DeleteRows(new NSIndexPath[] { indexPath }, UITableViewRowAnimation.Fade);
+                    break;
+                case UITableViewCellEditingStyle.None:
+                    break;
+            }
+        }
+        public override bool CanEditRow(UITableView tableView, NSIndexPath indexPath)
+        {
+            return true; // return false if you wish to disable editing for a specific indexPath or for all rows
+        }
+    }
 }
 
