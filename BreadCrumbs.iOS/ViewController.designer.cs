@@ -24,7 +24,7 @@ namespace BreadCrumbs.iOS
 
 		[Outlet]
 		[GeneratedCode ("iOS Designer", "1.0")]
-		UIButton saveButton { get; set; }        
+		UIButton saveButton { get; set; }
 
 		void ReleaseDesignerOutlets ()
 		{
