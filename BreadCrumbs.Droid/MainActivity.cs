@@ -13,6 +13,7 @@ using System.Linq;
 using Android.Locations;
 using System.Collections.Generic;
 using Android.Views.InputMethods;
+using Android.Content.PM;
 
 namespace BreadCrumbs.Droid
 {
@@ -55,13 +56,47 @@ namespace BreadCrumbs.Droid
 
             _placesListView = FindViewById<ListView>(Resource.Id.PlacesListView);
 			_placesListView.Adapter = ViewModel.SavedPlaces.GetAdapter(GetItemView);
-			_placesListView.ItemClick += delegate (object sender, AdapterView.ItemClickEventArgs e) {
-				var coordinates = this.ViewModel.SavedPlaces.ElementAt(e.Position).Coordinates;
-				var gmmIntentUri = Android.Net.Uri.Parse($"google.navigation:q={coordinates.Lat},{coordinates.Long}&directionsmode=walking");
-				Intent mapIntent = new Intent(Intent.ActionView, gmmIntentUri);
-				mapIntent.SetPackage("com.google.android.apps.maps");
-				StartActivity(mapIntent);
+
+			_placesListView.ItemClick += (sender, e) =>
+            {
+                if (IsGoogleMapsInstalled())
+                {
+                    var coordinates = this.ViewModel.SavedPlaces.ElementAt(e.Position).Coordinates;
+                    var gmmIntentUri = Android.Net.Uri.Parse($"google.navigation:q={coordinates.Lat},{coordinates.Long}&directionsmode=walking");
+                    Intent mapIntent = new Intent(Intent.ActionView, gmmIntentUri);
+                    mapIntent.SetPackage("com.google.android.apps.maps");
+                    StartActivity(mapIntent);
+                }
+                else
+                {
+                    var transaction = FragmentManager.BeginTransaction();
+                    var dialogFragment = new AlertDialogFragment();
+                    dialogFragment.Show(transaction, "dialog_fragment");
+                }
 			};
+
+            _placesListView.ItemLongClick += (sender, e) =>
+            {
+                ViewModel.SavedPlaces.RemoveAt(e.Position);
+            };
+        }
+
+        private bool IsGoogleMapsInstalled()
+        {
+            try
+            {
+                ApplicationInfo info = PackageManager.GetApplicationInfo("com.google.android.apps.maps", 0);
+                return true;
+            }
+            catch (PackageManager.NameNotFoundException e)
+            {
+                return false;
+            }
+        }
+
+        private void _placesListView_ItemLongClick(object sender, AdapterView.ItemLongClickEventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         private void SavePlaceAndClearTextBox()
