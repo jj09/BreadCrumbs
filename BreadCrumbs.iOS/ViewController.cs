@@ -6,6 +6,7 @@ using System.Linq;
 using Foundation;
 using BreadCrumbs.Shared.Models;
 using BreadCrumbs.Shared.Helpers;
+using System.Threading.Tasks;
 
 namespace BreadCrumbs.iOS
 {
@@ -24,14 +25,30 @@ namespace BreadCrumbs.iOS
 			// Perform any additional setup after loading the view, typically from a nib.
 			PlacesTableView.Source = new PlacesTableSource(ViewModel);
             placeNameTextField.Placeholder = "Name of the place";
-            saveButton.TouchUpInside += async (object sender, EventArgs e) =>
+            placeNameTextField.ShouldReturn += (textField) =>
             {
-                var name = this.placeNameTextField.Text;
-                await ViewModel.SaveAsync(name);
-                PlacesTableView.ReloadData();
-                this.placeNameTextField.Text = "";
+                if (textField == placeNameTextField)
+                {
+                    SavePlaceAndClearTextField();
+                    return false;
+                }
+                return true;
+            };
+
+            saveButton.TouchUpInside += (sender, e) =>
+            {
+                SavePlaceAndClearTextField();
             };
 		}
+
+        private void SavePlaceAndClearTextField()
+        {
+            var name = this.placeNameTextField.Text;
+            ViewModel.SaveAsync(name).ContinueWith((result) => {
+                PlacesTableView.ReloadData();
+            }, TaskScheduler.FromCurrentSynchronizationContext());
+            this.placeNameTextField.Text = "";
+        }
 
         public override void DidReceiveMemoryWarning ()
 		{
