@@ -6,36 +6,88 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:BreadCrumbs.Shared.Models"
+    xmlns:data="using:BreadCrumbs.Shared.Models"
     mc:Ignorable="d">
 
+    <Page.BottomAppBar>
+        <CommandBar>
+            <AppBarButton Label="Select" Icon="List" Click="SelectAppBarBtn_Click" x:Name="SelectAppBarBtn"/>
+            <AppBarButton Label="Delete" Icon="Delete" Click="RemoveItemsAppBarBtn_Click" x:Name="RemoveItemsAppBarBtn" />
+            <AppBarButton Label="Cancel" Icon="Cancel" Click="CancelSelectionAppBarBtn_Click" x:Name="CancelSelectionAppBarBtn"/>
+        </CommandBar>
+    </Page.BottomAppBar>
+
+    <Page.Resources>
+        <!-- When using x:Bind, you need to set x:DataType -->
+        <DataTemplate x:Name="PlacesListViewTemplate" x:DataType="data:Place">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Ellipse x:Name="Ellipse"
+                         Grid.RowSpan="2"
+                         Width ="32"
+                         Height="32"
+                         Margin="6"
+                         VerticalAlignment="Center"
+                         HorizontalAlignment="Center"
+                         Fill="LightGray"/>
+                <TextBlock Grid.Column="1"
+                           Text="{x:Bind DisplayName}" 
+                           x:Phase="1"
+                           Style="{ThemeResource BaseTextBlockStyle}"
+                           Margin="12,6,0,0"/>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
         <TextBox 
             x:Name="nameTextBox" 
             PlaceholderText="Name of the place" 
             HorizontalAlignment="Left" 
-            Margin="10,10,0,0" 
             TextWrapping="Wrap" 
             Text="" 
             VerticalAlignment="Top" 
             Width="340" 
             KeyUp="nameTextBox_KeyUp"
+            Grid.Row="0"
+            Grid.Column="0"
             />
-        <Button x:Name="saveButton" Content="Save" HorizontalAlignment="Left" Margin="10,47,0,0" VerticalAlignment="Top" Width="340" Click="saveButton_Click"/>
-        <ListView 
-            x:Name="savedPlacesListView" 
+        <Button 
+            x:Name="saveButton" 
+            Content="Save" 
             HorizontalAlignment="Left" 
-            Height="546" 
-            Margin="10,84,0,0" 
             VerticalAlignment="Top" 
-            Width="340"
-            ItemClick="savedPlacesListView_ItemClick"
-            IsItemClickEnabled="True">
-            <ListView.ItemTemplate>
-                <DataTemplate x:DataType="models:Place">
-                    <TextBlock Text="{x:Bind DisplayName}"/>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+            Width="340" 
+            Margin="5,0,0,0"
+            Click="saveButton_Click"
+            Grid.Row="0"
+            Grid.Column="1"
+            />        
+
+        <local:EdgeTappedListView x:Name="savedPlacesListView"
+                                  LeftEdgeBrush="Red"
+                                  SelectionMode="None"
+                                  Grid.Row="1"
+                                  Grid.ColumnSpan="2"
+                                  ItemClick="savedPlacesListView_ItemClick"
+                                  IsItemClickEnabled="True"
+                                  ItemTemplate="{StaticResource PlacesListViewTemplate}">
+        </local:EdgeTappedListView>
 
     </Grid>
 </Page>

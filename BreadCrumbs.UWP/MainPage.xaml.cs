@@ -79,5 +79,66 @@ namespace BreadCrumbs.UWP
             //var currentLocationCoordinates = await LocationHelper.GetCurrentLocation();
             //await Windows.System.Launcher.LaunchUriAsync(new Uri($"bingmaps:?rtp=pos.{currentLocationCoordinates.Lat}_{currentLocationCoordinates.Long}~pos.{selectedPlace.Coordinates.Lat}_{selectedPlace.Coordinates.Long}&mode=w"));
         }
+
+        // app bar actions
+
+        private void RemoveItemsAppBarBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (savedPlacesListView.SelectedIndex != -1)
+            {
+                // When an item is removed from the underlying collection, the Listview is updated, 
+                // hence the this.SelectedItems is updated as well. 
+                // It's needed to copy the selected items collection to iterate over other collection that 
+                // is not updated.
+                var selectedItems = savedPlacesListView.SelectedItems.Cast<Place>().ToList();
+
+                foreach (var item in selectedItems)
+                {
+                    ViewModel.SavedPlaces.Remove(item);
+                }
+            }
+        }
+
+        private void CancelSelectionAppBarBtn_Click(object sender, RoutedEventArgs e)
+        {
+            // If the list is multiple selection mode but there is no items selected, 
+            // then the list should return to the initial selection mode.
+            if (savedPlacesListView.SelectedItems.Count == 0)
+            {
+                savedPlacesListView.SelectionMode = ListViewSelectionMode.None;
+                savedPlacesListView.IsItemLeftEdgeTapEnabled = true;
+                SetCommandsVisibility(savedPlacesListView);
+            }
+            else
+            {
+                savedPlacesListView.SelectedItems.Clear();
+            }
+        }
+
+        private void SelectAppBarBtn_Click(object sender, RoutedEventArgs e)
+        {
+            savedPlacesListView.SelectionMode = ListViewSelectionMode.Multiple;
+            savedPlacesListView.IsItemLeftEdgeTapEnabled = false;
+            savedPlacesListView.IsItemClickEnabled = false;
+            SetCommandsVisibility(savedPlacesListView);
+        }
+
+        private void SetCommandsVisibility(ListView listView)
+        {
+            if (listView.SelectionMode == ListViewSelectionMode.Multiple || listView.SelectedItems.Count > 1)
+            {
+                SelectAppBarBtn.Visibility = Visibility.Collapsed;
+                CancelSelectionAppBarBtn.Visibility = Visibility.Visible;
+                RemoveItemsAppBarBtn.Visibility = Visibility.Visible;
+                savedPlacesListView.IsItemClickEnabled = false;
+            }
+            else
+            {
+                SelectAppBarBtn.Visibility = Visibility.Visible;
+                CancelSelectionAppBarBtn.Visibility = Visibility.Collapsed;
+                RemoveItemsAppBarBtn.Visibility = Visibility.Collapsed;
+                savedPlacesListView.IsItemClickEnabled = true;
+            }
+        }
     }
 }
