@@ -1,12 +1,12 @@
 ﻿using System;
 
-using UIKit;
-using BreadCrumbs.PCL.ViewModels;
-using System.Linq;
 using Foundation;
-using BreadCrumbs.PCL.Models;
-using BreadCrumbs.PCL.Helpers;
+using System.Linq;
 using System.Threading.Tasks;
+using UIKit;
+using BreadCrumbs.Shared.Models;
+using BreadCrumbs.Shared.Helpers;
+using BreadCrumbs.Shared.ViewModels;
 
 namespace BreadCrumbs.iOS
 {

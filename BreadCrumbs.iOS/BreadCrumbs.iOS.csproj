@@ -122,12 +122,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\BreadCrumbs.Shared\BreadCrumbs.PCL.csproj">
-      <Project>{1F2AAE2D-B47A-4B36-9F08-9FDC072A9753}</Project>
-      <Name>BreadCrumbs.PCL</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <BundleResource Include="Resources\apple-touch-icon-114x114-precomposed.png" />
     <BundleResource Include="Resources\Default.png" />
     <BundleResource Include="Resources\Icon-60%402x.png" />
@@ -195,4 +189,5 @@
   <ItemGroup>
     <BundleResource Include="Resources\Icon-Small%403x.png" />
   </ItemGroup>
+  <Import Project="..\BreadCrumbs.Shared\BreadCrumbs.Shared.projitems" Label="Shared" />
 </Project>

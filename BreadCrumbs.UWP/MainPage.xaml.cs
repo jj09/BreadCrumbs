@@ -14,9 +14,9 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using BreadCrumbs.PCL.Helpers;
-using BreadCrumbs.PCL.Models;
-using BreadCrumbs.PCL.ViewModels;
+using BreadCrumbs.Shared.Helpers;
+using BreadCrumbs.Shared.Models;
+using BreadCrumbs.Shared.ViewModels;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 

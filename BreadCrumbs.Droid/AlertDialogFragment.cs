@@ -13,7 +13,6 @@ using Android.Widget;
 
 namespace BreadCrumbs.Droid
 {
-
     public class AlertDialogFragment : DialogFragment
     {
         public override Dialog OnCreateDialog(Bundle savedInstanceState)

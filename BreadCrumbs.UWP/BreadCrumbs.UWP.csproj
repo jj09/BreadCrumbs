@@ -167,12 +167,7 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\BreadCrumbs.Shared\BreadCrumbs.PCL.csproj">
-      <Project>{1f2aae2d-b47a-4b36-9f08-9fdc072a9753}</Project>
-      <Name>BreadCrumbs.PCL</Name>
-    </ProjectReference>
-  </ItemGroup>
+  <Import Project="..\BreadCrumbs.Shared\BreadCrumbs.Shared.projitems" Label="Shared" />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

@@ -103,12 +103,7 @@
   <ItemGroup>
     <None Include="Properties\AndroidManifest.xml" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\BreadCrumbs.Shared\BreadCrumbs.PCL.csproj">
-      <Project>{1F2AAE2D-B47A-4B36-9F08-9FDC072A9753}</Project>
-      <Name>BreadCrumbs.PCL</Name>
-    </ProjectReference>
-  </ItemGroup>
+  <Import Project="..\BreadCrumbs.Shared\BreadCrumbs.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
      Other similar extension points exist, see Microsoft.Common.targets.
