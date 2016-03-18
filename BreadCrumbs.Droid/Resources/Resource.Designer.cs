@@ -28,6 +28,8 @@ namespace BreadCrumbs.Droid
 		{
 			global::GalaSoft.MvvmLight.Resource.String.ApplicationName = global::BreadCrumbs.Droid.Resource.String.ApplicationName;
 			global::GalaSoft.MvvmLight.Resource.String.Hello = global::BreadCrumbs.Droid.Resource.String.Hello;
+			global::SQLite.Net.Platform.XamarinAndroid.Resource.String.ApplicationName = global::BreadCrumbs.Droid.Resource.String.ApplicationName;
+			global::SQLite.Net.Platform.XamarinAndroid.Resource.String.Hello = global::BreadCrumbs.Droid.Resource.String.Hello;
 		}
 		
 		public partial class Attribute

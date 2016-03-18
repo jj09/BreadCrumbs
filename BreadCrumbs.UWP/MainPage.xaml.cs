@@ -94,7 +94,7 @@ namespace BreadCrumbs.UWP
 
                 foreach (var item in selectedItems)
                 {
-                    ViewModel.SavedPlaces.Remove(item);
+                    ViewModel.Remove(item);
                 }
             }
         }
