@@ -1,4 +1,4 @@
-﻿using BreadCrumbs.Shared.Models;
+﻿using BreadCrumbs.PCL.Models;
 using Plugin.Geolocator;
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BreadCrumbs.Shared.Helpers
+namespace BreadCrumbs.PCL.Helpers
 {
     public class LocationHelper
     {

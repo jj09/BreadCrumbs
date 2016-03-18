@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BreadCrumbs.UWP", "BreadCrumbs.UWP\BreadCrumbs.UWP.csproj", "{1FBD9B7D-C381-4AFE-BF20-68E597630A78}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BreadCrumbs.Shared", "BreadCrumbs.Shared\BreadCrumbs.Shared.csproj", "{1F2AAE2D-B47A-4B36-9F08-9FDC072A9753}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BreadCrumbs.PCL", "BreadCrumbs.PCL\BreadCrumbs.PCL.csproj", "{1F2AAE2D-B47A-4B36-9F08-9FDC072A9753}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BreadCrumbs.Droid", "BreadCrumbs.Droid\BreadCrumbs.Droid.csproj", "{28D4D5B7-BFB6-424A-B544-9D2A5AFD2AE2}"
 EndProject
