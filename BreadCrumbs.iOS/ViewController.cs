@@ -7,14 +7,16 @@ using UIKit;
 using BreadCrumbs.Shared.Models;
 using BreadCrumbs.Shared.Helpers;
 using BreadCrumbs.Shared.ViewModels;
+using CoreGraphics;
 
 namespace BreadCrumbs.iOS
 {
 	public partial class ViewController : UIViewController
 	{
 		MainViewModel ViewModel;
+        SavingOverlay savingOverlay;
 
-		public ViewController (IntPtr handle) : base (handle)
+        public ViewController (IntPtr handle) : base (handle)
 		{
 			ViewModel = new MainViewModel();
 		}
@@ -44,10 +46,26 @@ namespace BreadCrumbs.iOS
         private void SavePlaceAndClearTextField()
         {
             var name = this.placeNameTextField.Text;
+            ShowSavingOverlay();
             ViewModel.SaveAsync(name).ContinueWith((result) => {
                 PlacesTableView.ReloadData();
+                HideSavingOverlay();
             }, TaskScheduler.FromCurrentSynchronizationContext());
             this.placeNameTextField.Text = "";
+        }
+
+        private void ShowSavingOverlay()
+        {
+            var bounds = UIScreen.MainScreen.Bounds;
+
+            // show the loading overlay on the UI thread using the correct orientation sizing
+            savingOverlay = new SavingOverlay(bounds);
+            View.Add(savingOverlay);
+        }
+
+        private void HideSavingOverlay()
+        {
+            savingOverlay.Hide();
         }
 
         public override void DidReceiveMemoryWarning ()
@@ -135,6 +153,66 @@ namespace BreadCrumbs.iOS
         public override bool CanEditRow(UITableView tableView, NSIndexPath indexPath)
         {
             return true; // return false if you wish to disable editing for a specific indexPath or for all rows
+        }
+    }
+
+    public class SavingOverlay : UIView
+    {
+        // control declarations
+        UIActivityIndicatorView activitySpinner;
+        UILabel loadingLabel;
+
+        public SavingOverlay(CGRect frame) : base(frame)
+        {
+            // configurable bits
+            BackgroundColor = UIColor.Black;
+            Alpha = 0.75f;
+            AutoresizingMask = UIViewAutoresizing.All;
+
+            nfloat labelHeight = 22;
+            nfloat labelWidth = Frame.Width - 20;
+
+            // derive the center x and y
+            nfloat centerX = Frame.Width / 2;
+            nfloat centerY = Frame.Height / 2;
+
+            // create the activity spinner, center it horizontall and put it 5 points above center x
+            activitySpinner = new UIActivityIndicatorView(UIActivityIndicatorViewStyle.WhiteLarge);
+            activitySpinner.Frame = new CGRect(
+                centerX - (activitySpinner.Frame.Width / 2),
+                centerY - activitySpinner.Frame.Height - 20,
+                activitySpinner.Frame.Width,
+                activitySpinner.Frame.Height);
+            activitySpinner.AutoresizingMask = UIViewAutoresizing.All;
+            AddSubview(activitySpinner);
+            activitySpinner.StartAnimating();
+
+            // create and configure the "Loading Data" label
+            loadingLabel = new UILabel(new CGRect(
+                centerX - (labelWidth / 2),
+                centerY + 20,
+                labelWidth,
+                labelHeight
+                ));
+            loadingLabel.BackgroundColor = UIColor.Clear;
+            loadingLabel.TextColor = UIColor.White;
+            loadingLabel.Text = "Saving place...";
+            loadingLabel.TextAlignment = UITextAlignment.Center;
+            loadingLabel.AutoresizingMask = UIViewAutoresizing.All;
+            AddSubview(loadingLabel);
+
+        }
+
+        /// <summary>
+        /// Fades out the control and then removes it from the super view
+        /// </summary>
+        public void Hide()
+        {
+            UIView.Animate(
+                0.5, // duration
+                () => { Alpha = 0; },
+                () => { RemoveFromSuperview(); }
+            );
         }
     }
 }
