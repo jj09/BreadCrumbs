@@ -77,7 +77,7 @@ namespace BreadCrumbs.Droid
 
             _placesListView.ItemLongClick += (sender, e) =>
             {
-                ViewModel.SavedPlaces.RemoveAt(e.Position);
+                ViewModel.Remove(ViewModel.SavedPlaces.ElementAt(e.Position));
             };
         }
 

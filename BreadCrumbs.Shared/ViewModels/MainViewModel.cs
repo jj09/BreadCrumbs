@@ -5,17 +5,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BreadCrumbs.Shared.Models;
-using Plugin.Geolocator;
 using BreadCrumbs.Shared.Helpers;
 using System.IO;
 using SQLite.Net;
 using SQLite.Net.Interop;
+using SQLiteNetExtensions.Extensions;
 
 namespace BreadCrumbs.Shared.ViewModels
 {
     public class MainViewModel
     {
-        // This class use https://bitbucket.org/twincoders/sqlite-net-extensions
+        // This class uses https://bitbucket.org/twincoders/sqlite-net-extensions
 
         private static string _dbFileName = "BreadCrumbs_v_1_0.db3";
 
@@ -37,6 +37,7 @@ namespace BreadCrumbs.Shared.ViewModels
             string libraryPath = Path.Combine(documentsPath, "..", "Library"); // Library folder instead
             _platform = new SQLite.Net.Platform.XamarinIOS.SQLitePlatformIOS();
 #else
+            // UWP (TODO: change to #elif for case when more platforms will be supported - web?)
             var libraryPath = Windows.Storage.ApplicationData.Current.LocalFolder.Path;
             _platform = new SQLite.Net.Platform.WinRT.SQLitePlatformWinRT();
 #endif
@@ -47,8 +48,8 @@ namespace BreadCrumbs.Shared.ViewModels
                 conn.CreateTable<Coordinates>();
                 conn.CreateTable<Place>();
 
-                var places = conn.Table<Place>().ToList();
-            
+                var places = conn.GetAllWithChildren<Place>().ToList();
+
                 SavedPlaces = new ObservableCollection<Place>(places);
             }
         }
@@ -67,7 +68,7 @@ namespace BreadCrumbs.Shared.ViewModels
             {
                 lock (_locker)
                 {
-                    conn.Insert(place);
+                    conn.InsertWithChildren(place);                    
                     conn.Commit();
                 }
             }
@@ -84,6 +85,7 @@ namespace BreadCrumbs.Shared.ViewModels
                 lock (_locker)
                 {
                     conn.Delete<Place>(place.Id);
+                    conn.Delete<Coordinates>(place.CoordinatesId);
                     conn.Commit();
                 }
             }

@@ -13,7 +13,7 @@ namespace BreadCrumbs.Shared.Models
         [ForeignKey(typeof(Coordinates))]
         public int CoordinatesId { get; set; }
 
-        [OneToOne(CascadeOperations = CascadeOperation.All)]
+        [OneToOne(CascadeOperations = CascadeOperation.CascadeRead | CascadeOperation.CascadeInsert | CascadeOperation.CascadeDelete)]
         public Coordinates Coordinates { get; set; }
 
         [Ignore]

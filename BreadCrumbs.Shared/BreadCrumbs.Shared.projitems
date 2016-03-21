@@ -9,6 +9,7 @@
     <Import_RootNamespace>BreadCrumbs.Shared</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\BlobSerializer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\LocationHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Coordinates.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Place.cs" />

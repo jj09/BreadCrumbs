@@ -124,7 +124,7 @@ namespace BreadCrumbs.iOS
             {
                 case UITableViewCellEditingStyle.Delete:
                     // remove the item from the underlying data source
-                    ViewModel.SavedPlaces.RemoveAt(indexPath.Row);
+                    ViewModel.Remove(ViewModel.SavedPlaces.ElementAt(indexPath.Row));
                     // delete the row from the table
                     tableView.DeleteRows(new NSIndexPath[] { indexPath }, UITableViewRowAnimation.Fade);
                     break;
