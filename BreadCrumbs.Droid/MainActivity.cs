@@ -14,6 +14,7 @@ using Android.Locations;
 using System.Collections.Generic;
 using Android.Views.InputMethods;
 using Android.Content.PM;
+using System.Threading.Tasks;
 
 namespace BreadCrumbs.Droid
 {
@@ -55,9 +56,9 @@ namespace BreadCrumbs.Droid
             };
 
             _placesListView = FindViewById<ListView>(Resource.Id.PlacesListView);
-			_placesListView.Adapter = ViewModel.SavedPlaces.GetAdapter(GetItemView);
+			_placesListView.Adapter = ViewModel.SavedPlaces.GetAdapter(GetItemView);            
 
-			_placesListView.ItemClick += (sender, e) =>
+            _placesListView.ItemClick += (sender, e) =>
             {
                 if (IsGoogleMapsInstalled())
                 {
@@ -101,7 +102,14 @@ namespace BreadCrumbs.Droid
 
         private void SavePlaceAndClearTextBox()
         {
-            ViewModel.SaveAsync(_placeNameEditText.Text);
+            var mDialog = new ProgressDialog(this);
+            mDialog.SetMessage("Saving place...");
+            mDialog.SetCancelable(false);
+            mDialog.Show();
+
+            ViewModel.SaveAsync(_placeNameEditText.Text).ContinueWith((result) => {
+                mDialog.Hide();
+            }, TaskScheduler.FromCurrentSynchronizationContext());
 
             _placeNameEditText.Text = "";
         }
