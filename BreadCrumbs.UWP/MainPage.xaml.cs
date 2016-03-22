@@ -60,7 +60,12 @@ namespace BreadCrumbs.UWP
 
         private void SavePlaceAndClearTextBox()
         {
-            ViewModel.SaveAsync(this.nameTextBox.Text);
+            savingProgressBar.Visibility = Visibility.Visible;
+            saveButton.IsEnabled = false;
+            ViewModel.SaveAsync(this.nameTextBox.Text).ContinueWith((result) => {
+                savingProgressBar.Visibility = Visibility.Collapsed;
+                saveButton.IsEnabled = true;
+            }, TaskScheduler.FromCurrentSynchronizationContext());
 
             this.nameTextBox.Text = "";
         }
