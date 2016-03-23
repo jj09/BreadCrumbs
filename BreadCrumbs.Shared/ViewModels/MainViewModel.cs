@@ -10,6 +10,7 @@ using System.IO;
 using SQLite.Net;
 using SQLite.Net.Interop;
 using SQLiteNetExtensions.Extensions;
+using System.Collections.Specialized;
 
 namespace BreadCrumbs.Shared.ViewModels
 {
@@ -17,12 +18,17 @@ namespace BreadCrumbs.Shared.ViewModels
     {
         // This class uses https://bitbucket.org/twincoders/sqlite-net-extensions
 
+        public ObservableCollection<Place> SavedPlaces;
+
         private static string _dbFileName = "BreadCrumbs_v_1_0.db3";
 
-        public ObservableCollection<Place> SavedPlaces;
         private object _locker = new object(); // SQLite Db locker
+
         private string _dbPath;
+
         private ISQLitePlatform _platform;
+
+        private SQLiteConnection GetSQLiteConn() => new SQLiteConnection(_platform, _dbPath, true, null);
 
         public MainViewModel()
         {
@@ -50,11 +56,43 @@ namespace BreadCrumbs.Shared.ViewModels
 
                 var places = conn.GetAllWithChildren<Place>().ToList();
 
-                SavedPlaces = new ObservableCollection<Place>(places);
+                SavedPlaces = new ObservableCollection<Place>(places);                
             }
+
+            SavedPlaces.CollectionChanged += SavedPlaces_CollectionChanged;
         }
 
-        private SQLiteConnection GetSQLiteConn() => new SQLiteConnection(_platform, _dbPath, true, null);
+        private void SavedPlaces_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == NotifyCollectionChangedAction.Add)
+            {
+                var place = e.NewItems[0] as Place;
+
+                using (var conn = GetSQLiteConn())
+                {
+                    lock (_locker)
+                    {
+                        conn.InsertWithChildren(place);
+                        conn.Commit();
+                    }
+                }
+            }
+
+            if (e.Action == NotifyCollectionChangedAction.Remove)
+            {
+                var place = e.OldItems[0] as Place;
+
+                using (var conn = GetSQLiteConn())
+                {
+                    lock (_locker)
+                    {
+                        conn.Delete<Place>(place.Id);
+                        conn.Delete<Coordinates>(place.CoordinatesId);
+                        conn.Commit();
+                    }
+                }
+            }
+        }        
 
         async public Task<bool> SaveAsync(string name)
         {
@@ -64,31 +102,12 @@ namespace BreadCrumbs.Shared.ViewModels
 
             SavedPlaces.Add(place);
 
-            using (var conn = GetSQLiteConn())
-            {
-                lock (_locker)
-                {
-                    conn.InsertWithChildren(place);                    
-                    conn.Commit();
-                }
-            }
-
             return true;
         }
 
         public void Remove(Place place)
         {
             SavedPlaces.Remove(place);
-
-            using (var conn = GetSQLiteConn())
-            {
-                lock (_locker)
-                {
-                    conn.Delete<Place>(place.Id);
-                    conn.Delete<Coordinates>(place.CoordinatesId);
-                    conn.Commit();
-                }
-            }
         }
     }
 }
