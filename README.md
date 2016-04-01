@@ -1,6 +1,6 @@
 ## Bread Crumbs
 
-![Bread Crumbs](BreadCrumbs.png)
+<img src="BreadCrumbs.png" alt="BreadCrumbs" width="150" />
 
 Multiplatform Mobile App built with Xamarin that enables you to save your current location, and navigate to it later on.
 
