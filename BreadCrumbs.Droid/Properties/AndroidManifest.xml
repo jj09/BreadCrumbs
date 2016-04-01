@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="BreadCrumbs.Droid.BreadCrumbs.Droid" android:versionCode="1" android:versionName="1.0" android:installLocation="auto">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="jj09.breadcrumbs" android:versionName="1.1" android:installLocation="auto" android:versionCode="2">
 	<uses-sdk />
 	<uses-permission android:name="android.permission.LOCATION_HARDWARE" />
 	<uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
@@ -9,5 +9,5 @@
 	<uses-permission android:name="android.permission.CONTROL_LOCATION_UPDATES" />
 	<uses-permission android:name="android.permission.INSTALL_LOCATION_PROVIDER" />
 	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-	<application android:label="Bread Crumbs"></application>
+	<application android:label="Bread Crumbs" android:icon="@drawable/Icon"></application>
 </manifest>
