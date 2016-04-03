@@ -5,7 +5,7 @@
 	<key>CFBundleName</key>
 	<string>BreadCrumbs.iOS</string>
 	<key>CFBundleIdentifier</key>
-	<string>net.jj09.breadcrumbs-ios</string>
+	<string>jj09.breadcrumbs</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
@@ -66,9 +66,9 @@
 	</array>
 	<key>UIPrerenderedIcon</key>
 	<false/>
-  <key>NSLocationAlwaysUsageDescription</key>
-  <string>Location - always</string>
-  <key>NSLocationWhenInUseUsageDescription</key>
-  <string>Location - when in use</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Location - always</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Location - when in use</string>
 </dict>
 </plist>
