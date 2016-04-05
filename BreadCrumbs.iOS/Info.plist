@@ -9,7 +9,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
-	<string>1.1</string>
+	<string>1.2</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>MinimumOSVersion</key>
@@ -42,10 +42,6 @@
 				<string>com.apple.maps.directionsrequest</string>
 			</array>
 		</dict>
-	</array>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>location</string>
 	</array>
 	<key>CFBundleDisplayName</key>
 	<string>Bread Crumbs</string>
