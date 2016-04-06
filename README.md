@@ -10,6 +10,8 @@ Multiplatform Mobile App built with Xamarin that enables you to save your curren
 	
 Requirements:
 * v1
-	* save Place (location + name) and display on the list
-	* navigate to place
-	* removing places
+	* [x] save Place (location + name) and display on the list
+	* [x] navigate to place
+	* [x] removing places
+* v2
+	* [] add map preview with pinned places
