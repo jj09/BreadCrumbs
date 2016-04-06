@@ -254,3 +254,6 @@ $RECYCLE.BIN/
 
 #Droid
 *.apk
+
+#UWP
+BundleArtifacts
