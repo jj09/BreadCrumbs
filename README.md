@@ -14,4 +14,4 @@ Requirements:
 	* [x] navigate to place
 	* [x] removing places
 * v2
-	* [] add map preview with pinned places
+	* [ ] add map preview with pinned places
