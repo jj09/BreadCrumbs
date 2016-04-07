@@ -8,7 +8,7 @@ Multiplatform Mobile App built with Xamarin that enables you to save your curren
 * Android
 * iOS
 	
-Roadmap:
+###Roadmap:
 * v1
 	* [x] save Place (location + name) and display on the list
 	* [x] navigate to place
