@@ -257,3 +257,6 @@ $RECYCLE.BIN/
 
 #UWP
 BundleArtifacts
+_pkginfo.txt
+*.appx
+Package.StoreAssociation.xml
