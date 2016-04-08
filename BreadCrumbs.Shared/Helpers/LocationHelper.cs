@@ -14,7 +14,7 @@ namespace BreadCrumbs.Shared.Helpers
         {
             var locator = CrossGeolocator.Current;
             locator.DesiredAccuracy = 10;
-            var position = await locator.GetPositionAsync(timeoutMilliseconds: 10000);
+            var position = await locator.GetPositionAsync(timeoutMilliseconds: 100000);
             var coordinates = new Coordinates(position.Latitude, position.Longitude);
 
             return coordinates;
