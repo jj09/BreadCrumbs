@@ -122,8 +122,10 @@ namespace BreadCrumbs.iOS
             string mapsUrl = "";
             if (UIApplication.SharedApplication.CanOpenUrl(new NSUrl("comgooglemaps://")))
             {
-                var currentLocationCoordinates = await LocationHelper.GetCurrentLocation();
-                mapsUrl = $"comgooglemaps://?sq={currentLocationCoordinates.Lat},{currentLocationCoordinates.Long}&dq={placeCoordinates.Lat},{placeCoordinates.Long}&directionsmode=walking";
+                // below 2 lines doesn't work on iOS, instead of starting navigation, it just opens Google Maps and does nothing
+                //var currentLocationCoordinates = await LocationHelper.GetCurrentLocation();
+                //mapsUrl = $"comgooglemaps://?sq={currentLocationCoordinates.Lat},{currentLocationCoordinates.Long}&dq={placeCoordinates.Lat},{placeCoordinates.Long}&directionsmode=walking";
+                mapsUrl = $"comgooglemaps://?q={placeCoordinates.Lat},{placeCoordinates.Long}";
             }
             else
             {
