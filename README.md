@@ -15,3 +15,4 @@ Multiplatform Mobile App built with Xamarin that enables you to save your curren
 	* [x] removing places
 * v2
 	* [ ] add map preview with pinned places
+	* [ ] sync data with cloud (fb/tw/G+/gh auth)
