@@ -48,12 +48,12 @@
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <MtouchFloat32>true</MtouchFloat32>
     <MtouchUseSGen>true</MtouchUseSGen>
-    <CodesignKey>iPhone Distribution: Jakub Jedryszek (FF4TXU272U)</CodesignKey>
+    <CodesignKey>iPhone Developer: Jakub Jedryszek (GB5K8LYNMV)</CodesignKey>
     <MtouchUseRefCounting>true</MtouchUseRefCounting>
-    <CodesignProvision>8fcff1d3-d891-439e-b759-8b299b6bfd62</CodesignProvision>
+    <CodesignProvision>73a045f2-da4c-452e-847c-95d0d06f1e2f</CodesignProvision>
     <CodesignResourceRules />
     <CodesignExtraArgs />
-    <BuildIpa>True</BuildIpa>
+    <BuildIpa>False</BuildIpa>
     <IpaIncludeArtwork>False</IpaIncludeArtwork>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
@@ -103,7 +103,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'AppStore|iPhone'">
     <BuildIpa>True</BuildIpa>
     <IpaIncludeArtwork>False</IpaIncludeArtwork>
-    <CodesignKey>iPhone Distribution: Jakub Jedryszek (FF4TXU272U)</CodesignKey>
+    <CodesignKey>iPhone Developer: Jakub Jedryszek (GB5K8LYNMV)</CodesignKey>
     <CodesignProvision>8fcff1d3-d891-439e-b759-8b299b6bfd62</CodesignProvision>
     <CodesignEntitlements />
     <CodesignResourceRules />
@@ -128,11 +128,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Plugin.Geolocator, Version=3.0.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xam.Plugin.Geolocator.4.0.0-beta2\lib\Xamarin.iOS10\Plugin.Geolocator.dll</HintPath>
+      <HintPath>..\packages\Xam.Plugin.Geolocator.3.0.4\lib\Xamarin.iOS10\Plugin.Geolocator.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Plugin.Geolocator.Abstractions, Version=3.0.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xam.Plugin.Geolocator.4.0.0-beta2\lib\Xamarin.iOS10\Plugin.Geolocator.Abstractions.dll</HintPath>
+      <HintPath>..\packages\Xam.Plugin.Geolocator.3.0.4\lib\Xamarin.iOS10\Plugin.Geolocator.Abstractions.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="SQLite.Net, Version=3.0.5.0, Culture=neutral, processorArchitecture=MSIL">
