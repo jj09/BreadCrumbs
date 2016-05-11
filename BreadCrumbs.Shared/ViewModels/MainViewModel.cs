@@ -42,10 +42,13 @@ namespace BreadCrumbs.Shared.ViewModels
             string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal); // Documents folder
             string libraryPath = Path.Combine(documentsPath, "..", "Library"); // Library folder instead
             _platform = new SQLite.Net.Platform.XamarinIOS.SQLitePlatformIOS();
-#else
+#elif WINDOWS_UWP
             // UWP (TODO: change to #elif for case when more platforms will be supported - web?)
             var libraryPath = Windows.Storage.ApplicationData.Current.LocalFolder.Path;
             _platform = new SQLite.Net.Platform.WinRT.SQLitePlatformWinRT();
+#else
+            var libraryPath = Guid.NewGuid().ToString();
+            _platform = new SQLite.Net.Platform.Win32.SQLitePlatformWin32();
 #endif
             _dbPath = Path.Combine(libraryPath, _dbFileName);
 
