@@ -17,20 +17,10 @@ namespace BreadCrumbs.Shared.Models
         public Coordinates Coordinates { get; set; }
 
         [Ignore]
-        public string DisplayName
-        {
-            get
-            {
-                if (Coordinates != null)
-                {
-                    return Name + $" ({Coordinates.Lat.ToString("#.##")}, {Coordinates.Long.ToString("#.##")})";
-                }
-                else
-                {
-                    return Name;
-                }
-            }
-        }
+        public string DisplayName => Coordinates != null ? Name + $" ({CoordinatesString})" : Name;
+
+        [Ignore]
+        private string CoordinatesString => $"{Coordinates?.Lat.ToString("#.##")}, {Coordinates?.Long.ToString("#.##")}";
 
         public Place()
         {

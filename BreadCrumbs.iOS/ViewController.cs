@@ -11,47 +11,49 @@ using CoreGraphics;
 
 namespace BreadCrumbs.iOS
 {
-	public partial class ViewController : UIViewController
+    public partial class ViewController : UITableViewController
 	{
-		private readonly MainViewModel _viewModel;
-        SavingOverlay savingOverlay;
+		private MainViewModel _viewModel;
+        private SavingOverlay savingOverlay;
 
         public ViewController (IntPtr handle) : base (handle)
 		{
-			_viewModel = ContainerHelper.Container.GetInstance<MainViewModel>();
+			
 		}
 
 		public override void ViewDidLoad ()
 		{
-			base.ViewDidLoad ();
-			// Perform any additional setup after loading the view, typically from a nib.
-			PlacesTableView.Source = new PlacesTableSource(_viewModel);
-            placeNameTextField.Placeholder = "Name of the place";
-            placeNameTextField.ShouldReturn += (textField) =>
-            {
-                if (textField == placeNameTextField)
-                {
-                    SavePlaceAndClearTextField();
-                    return false;
-                }
-                return true;
-            };
+			base.ViewDidLoad();
 
-            saveButton.TouchUpInside += (sender, e) =>
+            _viewModel = ContainerHelper.Container.GetInstance<MainViewModel>();
+
+            TableView.Source = new PlacesTableSource(_viewModel);
+
+            _addButton.Clicked += (sender, e) =>
             {
-                SavePlaceAndClearTextField();
+                var addPopup = UIAlertController.Create("Enter name:", "", UIAlertControllerStyle.Alert);
+
+                addPopup.AddTextField(x => { });
+
+                addPopup.AddAction(UIAlertAction.Create("Add", UIAlertActionStyle.Default, x =>
+                {
+                    var name = addPopup.TextFields[0]?.Text;
+                    SavePlaceAndClearTextField(name);
+                }));
+
+                addPopup.AddAction(UIAlertAction.Create("Cancel", UIAlertActionStyle.Cancel, x => {}));
+
+				PresentViewController(addPopup, true, null);
             };
 		}
 
-        private void SavePlaceAndClearTextField()
+        private void SavePlaceAndClearTextField(string name)
         {
-            var name = this.placeNameTextField.Text;
             ShowSavingOverlay();
             _viewModel.SaveAsync(name).ContinueWith((result) => {
-                PlacesTableView.ReloadData();
+                TableView.ReloadData();
                 HideSavingOverlay();
             }, TaskScheduler.FromCurrentSynchronizationContext());
-            this.placeNameTextField.Text = "";
         }
 
         private void ShowSavingOverlay()
@@ -77,7 +79,7 @@ namespace BreadCrumbs.iOS
 		public override void ViewWillAppear(bool animated)
 		{
 			base.ViewWillAppear(animated);
-            PlacesTableView.ReloadData();
+            TableView.ReloadData();
         }
 
     }

@@ -16,31 +16,13 @@ namespace BreadCrumbs.iOS
     {
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UITextField placeNameTextField { get; set; }
-
-        [Outlet]
-        [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UITableView PlacesTableView { get; set; }
-
-        [Outlet]
-        [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UIButton saveButton { get; set; }
+        UIKit.UIBarButtonItem _addButton { get; set; }
 
         void ReleaseDesignerOutlets ()
         {
-            if (placeNameTextField != null) {
-                placeNameTextField.Dispose ();
-                placeNameTextField = null;
-            }
-
-            if (PlacesTableView != null) {
-                PlacesTableView.Dispose ();
-                PlacesTableView = null;
-            }
-
-            if (saveButton != null) {
-                saveButton.Dispose ();
-                saveButton = null;
+            if (_addButton != null) {
+                _addButton.Dispose ();
+                _addButton = null;
             }
         }
     }
