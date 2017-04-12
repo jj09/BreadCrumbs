@@ -43,7 +43,7 @@
                             <outlet property="delegate" destination="105" id="109"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Breadcrumbs" id="106">
+                    <navigationItem key="navigationItem" title="Bread Crumbs" id="106">
                         <barButtonItem key="rightBarButtonItem" id="120" systemItem="add"/>
                     </navigationItem>
                     <connections>
