@@ -57,7 +57,9 @@ namespace BreadCrumbs.Shared.ViewModels
                 conn.CreateTable<Coordinates>();
                 conn.CreateTable<Place>();
 
-                var places = conn.GetAllWithChildren<Place>().ToList();
+                var places = conn.GetAllWithChildren<Place>()
+                                 .OrderByDescending(x => x.CreateDateTime)
+                                 .ToList();
 
                 SavedPlaces = new ObservableCollection<Place>(places);                
             }
@@ -103,7 +105,7 @@ namespace BreadCrumbs.Shared.ViewModels
 
             var place = new Place(name, coordinates.Lat, coordinates.Long);
 
-            SavedPlaces.Add(place);
+            SavedPlaces.Insert(0, place);
 
             return true;
         }

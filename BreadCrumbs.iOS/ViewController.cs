@@ -107,10 +107,11 @@ namespace BreadCrumbs.iOS
 
 			if (cell == null)
 			{
-				cell = new UITableViewCell (UITableViewCellStyle.Default, CellIdentifier);
+                cell = new UITableViewCell (UITableViewCellStyle.Subtitle, CellIdentifier);
 			}
 
-			cell.TextLabel.Text = item.DisplayName;
+            cell.TextLabel.Text = item.Name;
+            cell.DetailTextLabel.Text = item.DateAndCoordinates;
 
 			return cell;
 		}
