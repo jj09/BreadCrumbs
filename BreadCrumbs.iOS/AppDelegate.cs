@@ -1,4 +1,5 @@
-﻿using Foundation;
+﻿using BreadCrumbs.Shared.Helpers;
+using Foundation;
 using UIKit;
 
 namespace BreadCrumbs.iOS
@@ -17,8 +18,7 @@ namespace BreadCrumbs.iOS
 
 		public override bool FinishedLaunching (UIApplication application, NSDictionary launchOptions)
 		{
-			// Override point for customization after application launch.
-			// If not required for your application you can safely delete this method
+            ContainerHelper.Init();
 
 			return true;
 		}
