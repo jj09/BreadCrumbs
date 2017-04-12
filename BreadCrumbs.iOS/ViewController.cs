@@ -13,19 +13,19 @@ namespace BreadCrumbs.iOS
 {
 	public partial class ViewController : UIViewController
 	{
-		MainViewModel ViewModel;
+		private readonly MainViewModel _viewModel;
         SavingOverlay savingOverlay;
 
         public ViewController (IntPtr handle) : base (handle)
 		{
-			ViewModel = new MainViewModel();
+			_viewModel = ContainerHelper.Container.GetInstance<MainViewModel>();
 		}
 
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
 			// Perform any additional setup after loading the view, typically from a nib.
-			PlacesTableView.Source = new PlacesTableSource(ViewModel);
+			PlacesTableView.Source = new PlacesTableSource(_viewModel);
             placeNameTextField.Placeholder = "Name of the place";
             placeNameTextField.ShouldReturn += (textField) =>
             {
@@ -47,7 +47,7 @@ namespace BreadCrumbs.iOS
         {
             var name = this.placeNameTextField.Text;
             ShowSavingOverlay();
-            ViewModel.SaveAsync(name).ContinueWith((result) => {
+            _viewModel.SaveAsync(name).ContinueWith((result) => {
                 PlacesTableView.ReloadData();
                 HideSavingOverlay();
             }, TaskScheduler.FromCurrentSynchronizationContext());
@@ -86,22 +86,22 @@ namespace BreadCrumbs.iOS
 	{
 		string CellIdentifier = "TableCell";
 
-		MainViewModel ViewModel;
+		private readonly MainViewModel _viewModel;
         
 		public PlacesTableSource (MainViewModel vm)
 		{
-			ViewModel = vm;
+			_viewModel = vm;
 		}
 
 		public override nint RowsInSection (UITableView tableview, nint section)
 		{
-			return ViewModel.SavedPlaces.Count;
+			return _viewModel.SavedPlaces.Count;
 		}
 
 		public override UITableViewCell GetCell (UITableView tableView, NSIndexPath indexPath)
 		{
 			UITableViewCell cell = tableView.DequeueReusableCell (CellIdentifier);
-			var item = ViewModel.SavedPlaces.ElementAt(indexPath.Row);
+			var item = _viewModel.SavedPlaces.ElementAt(indexPath.Row);
 
 			if (cell == null)
 			{
@@ -113,10 +113,12 @@ namespace BreadCrumbs.iOS
 			return cell;
 		}
 
-		async public override void RowSelected (UITableView tableView, NSIndexPath indexPath)
+		public override void RowSelected (UITableView tableView, NSIndexPath indexPath)
 		{
+            tableView.DeselectRow(indexPath, true);
+
             // navigate to place
-            var place = ViewModel.SavedPlaces.ElementAt(indexPath.Row);
+            var place = _viewModel.SavedPlaces.ElementAt(indexPath.Row);
             var placeCoordinates = place.Coordinates;
 
             string mapsUrl = "";
@@ -144,7 +146,7 @@ namespace BreadCrumbs.iOS
             {
                 case UITableViewCellEditingStyle.Delete:
                     // remove the item from the underlying data source
-                    ViewModel.Remove(ViewModel.SavedPlaces.ElementAt(indexPath.Row));
+                    _viewModel.Remove(_viewModel.SavedPlaces.ElementAt(indexPath.Row));
                     // delete the row from the table
                     tableView.DeleteRows(new NSIndexPath[] { indexPath }, UITableViewRowAnimation.Fade);
                     break;
