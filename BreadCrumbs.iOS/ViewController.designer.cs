@@ -11,35 +11,37 @@ using UIKit;
 
 namespace BreadCrumbs.iOS
 {
-	[Register ("ViewController")]
-	partial class ViewController
-	{
-		[Outlet]
-		[GeneratedCode ("iOS Designer", "1.0")]
-		UITextField placeNameTextField { get; set; }
+    [Register ("ViewController")]
+    partial class ViewController
+    {
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UITextField placeNameTextField { get; set; }
 
-		[Outlet]
-		[GeneratedCode ("iOS Designer", "1.0")]
-		UITableView PlacesTableView { get; set; }
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UITableView PlacesTableView { get; set; }
 
-		[Outlet]
-		[GeneratedCode ("iOS Designer", "1.0")]
-		UIButton saveButton { get; set; }
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIButton saveButton { get; set; }
 
-		void ReleaseDesignerOutlets ()
-		{
-			if (placeNameTextField != null) {
-				placeNameTextField.Dispose ();
-				placeNameTextField = null;
-			}
-			if (PlacesTableView != null) {
-				PlacesTableView.Dispose ();
-				PlacesTableView = null;
-			}
-			if (saveButton != null) {
-				saveButton.Dispose ();
-				saveButton = null;
-			}
-		}
-	}
+        void ReleaseDesignerOutlets ()
+        {
+            if (placeNameTextField != null) {
+                placeNameTextField.Dispose ();
+                placeNameTextField = null;
+            }
+
+            if (PlacesTableView != null) {
+                PlacesTableView.Dispose ();
+                PlacesTableView = null;
+            }
+
+            if (saveButton != null) {
+                saveButton.Dispose ();
+                saveButton = null;
+            }
+        }
+    }
 }
