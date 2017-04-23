@@ -9,8 +9,10 @@ Multiplatform Mobile App built with Xamarin that enables you to save your curren
 <a href="https://play.google.com/store/apps/details?id=jj09.breadcrumbs"><img src="http://seom.esa.int/files/googleplay_icon.jpg" width="200px" /></a>
 
 <a href="https://www.microsoft.com/en-us/store/apps/bread-crumbs/9nblggh4lzmg"><img src="http://www.music-maker.com/fileadmin/MumaCore/images/cta/btn-windows-store-en.png" width="200px" /></a>
+
+<a href="http://onelink.to/jpeskx"><img src="BreadCrumbsQrCode.png" /></a>
 	
-###Roadmap:
+### Roadmap:
 * v1
 	* [x] save Place (location + name) and display on the list
 	* [x] navigate to place
